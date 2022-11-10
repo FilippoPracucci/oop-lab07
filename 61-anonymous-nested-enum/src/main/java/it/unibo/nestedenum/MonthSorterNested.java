@@ -29,7 +29,7 @@ public final class MonthSorterNested implements MonthSorter {
             this.days = days;
         }
 
-        Month fromString(final String monthName) {
+        public static Month fromString(final String monthName) {
             Objects.requireNonNull(monthName);
             try {
                 return valueOf(monthName);
@@ -55,11 +55,27 @@ public final class MonthSorterNested implements MonthSorter {
 
     @Override
     public Comparator<String> sortByDays() {
-        return null;
+        return new SortByDate();
     }
 
     @Override
     public Comparator<String> sortByOrder() {
-        return null;
+        return new SortByMonthOrder();
+    }
+
+    private static class SortByMonthOrder implements Comparator<String> {
+        @Override
+        public int compare(final String s1, final String s2) {
+            return Month.fromString(s1).compareTo(Month.fromString(s2));
+        }
+    }
+
+    private static class SortByDate implements Comparator<String> {
+        @Override
+        public int compare(final String s1, final String s2) {
+            final Month month1 = Month.fromString(s1);
+            final Month month2 = Month.fromString(s2);
+            return Integer.compare(month1.days, month2.days);
+        }
     }
 }
