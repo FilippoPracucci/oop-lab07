@@ -36,7 +36,7 @@ public final class LaunchApp {
         InvocationTargetException,
         NoSuchMethodException {
 
-        final var model = new DrawNumberImpl();
+        final DrawNumberImpl model = new DrawNumberImpl();
         final DrawNumberController app = new DrawNumberControllerImpl(model);
         for (final String name : List.of("Swing", "Stdout")) {
             final Class<?> viewClass = Class.forName("it.unibo.mvc.view.DrawNumber" + name + "View");
